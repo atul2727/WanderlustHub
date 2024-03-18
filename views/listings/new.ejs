@@ -1,32 +1,54 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>New</title>
-</head>
-<body>
+<% layout("layouts/boilerplate") %>
 
-    <h1>Create New Listing</h1>
+    <link rel="stylesheet" href="/css/new.css">
 
-    <form method="POST" action="/listings">
+    <body>
 
-        <input type="text" name="title" placeholder="Enter Title" id="" >
-        <br>
-        <input type="text" name="description" placeholder="Enter Description" id="" >
-        <br>
-        <input type="text" name="image" placeholder="Enter Image" id="" >
-        <br>
-        <input type="text" name="price" placeholder="Enter Price" id="" >
-        <br>
-        <input type="text" name="country" placeholder="Enter Country" id="" >
-        <br>
-        <input type="text" name="location" placeholder="Enter Location" id="" >
         <br>
 
-        <button>ADD</button>
+        <div class="container">
+            <div class="row justify-content-center">
+                <div class="col-md-8">
+                    <h2>Create New Listing</h2>
+                    <form class="new-form" method="POST" action="/listings">
 
-    </form>
-    
-</body>
-</html>
+                        <!-- Moved form elements from the second form here -->
+                        <div class="mb-3">
+                            <label for="title" class="form-label">Title</label>
+                            <input type="text" class="form-control" name="listing[title]" id="title"
+                                placeholder="Enter Title">
+                        </div>
+                        <div class="mb-3">
+                            <label for="description" class="form-label">Description</label>
+                            <input type="text" class="form-control" name="listing[description]" id="description"
+                                placeholder="Enter Description">
+                        </div>
+                        <div class="mb-3">
+                            <label for="image" class="form-label">Image</label>
+                            <input type="text" class="form-control" name="listing[image]" id="image"
+                                placeholder="Enter Image URL">
+                        </div>
+                        <div class="mb-3">
+                            <label for="price" class="form-label">Price</label>
+                            <input type="text" class="form-control" name="listing[price]" id="price"
+                                placeholder="Enter Price">
+                        </div>
+                        <div class="mb-3">
+                            <label for="country" class="form-label">Country</label>
+                            <input type="text" class="form-control" name="listing[country]" id="country"
+                                placeholder="Enter Country">
+                        </div>
+                        <div class="mb-3">
+                            <label for="location" class="form-label">Location</label>
+                            <input type="text" class="form-control" name="listing[location]" id="location"
+                                placeholder="Enter Location">
+                        </div>
+
+                        <button type="submit" class="btn btn-danger">ADD</button>
+
+                    </form>
+                </div>
+            </div>
+        </div>
+        <br>
+    </body>

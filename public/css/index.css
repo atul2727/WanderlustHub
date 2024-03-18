@@ -1,0 +1,44 @@
+
+/* index.ejs styling */
+/* Remove underline and change link color */
+.card-link {
+    text-decoration: none;
+    color: black;
+    /* Change the color to your desired color */
+}
+
+/* Optional: Change link color on hover */
+.card-link:hover {
+    color: #555;
+    /* Change the hover color to your desired color */
+}
+
+.card-img-top {
+    height: 210px;
+}
+
+.card-img-overlay {
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.card:hover .card-img-overlay {
+    opacity: 0.4;
+    background-color: rgba(255, 255, 255, 0.2);
+}
+
+.card {
+    border: none !important;
+}
+
+.card-img-top {
+    border-radius: 5% !important;
+    height: 210px !important;
+    border-bottom: none !important;
+    /* Add this line to remove the border */
+}
+
+.card-footer{
+    padding: 0 !important;
+    border: none !important;
+}
