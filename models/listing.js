@@ -6,7 +6,13 @@ const defaultImage = "https://t3.ftcdn.net/jpg/03/45/05/92/240_F_345059232_CPieT
 const listingSchema = new Schema({
     title: { type: String, required: true },
     description: { type: String, required: true },
-    image: { type: String, required: true, default: defaultImage }, // Directly store the image URL
+    image: {
+        type: String,
+        required: true,
+        default: "https://t3.ftcdn.net/jpg/03/45/05/92/240_F_345059232_CPieT8RIWOUk4JqBkkWkIETYAkmz2b75.jpg",
+        set : (v) => v === "" ? "https://t3.ftcdn.net/jpg/03/45/05/92/240_F_345059232_CPieT8RIWOUk4JqBkkWkIETYAkmz2b75.jpg" : v  //if no value is passed in use the default image
+        // default: defaultImage
+    }, // Directly store the image URL
     price: { type: Number, required: true },
     location: { type: String, required: true },
     country: { type: String, required: true },

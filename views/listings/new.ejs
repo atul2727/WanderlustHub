@@ -10,43 +10,61 @@
             <div class="row justify-content-center">
                 <div class="col-md-8">
                     <h2>Create New Listing</h2>
-                    <form class="new-form" method="POST" action="/listings">
-
-                        <!-- Moved form elements from the second form here -->
-                        <div class="mb-3">
-                            <label for="title" class="form-label">Title</label>
-                            <input type="text" class="form-control" name="listing[title]" id="title"
-                                placeholder="Enter Title">
+                    <form class="needs-validation" method="POST" action="/listings" novalidate>
+                        <div class="row">
+                            <div class="col-md-12 mb-3">
+                                <label for="title" class="form-label">Title</label>
+                                <input type="text" class="form-control" name="listing[title]" id="title" placeholder="Enter Title" required>
+                                <div class="invalid-feedback">
+                                    Please provide a title.
+                                </div>
+                            </div>
                         </div>
-                        <div class="mb-3">
-                            <label for="description" class="form-label">Description</label>
-                            <input type="text" class="form-control" name="listing[description]" id="description"
-                                placeholder="Enter Description">
+                        <div class="row">
+                            <div class="col-md-12 mb-3">
+                                <label for="description" class="form-label">Description</label>
+                                <textarea type="text" class="form-control" name="listing[description]" id="description"
+                                    placeholder="Enter Description" required></textarea>
+                                <div class="invalid-feedback">
+                                    Please provide a description.
+                                </div>
+                            </div>
                         </div>
-                        <div class="mb-3">
-                            <label for="image" class="form-label">Image</label>
-                            <input type="text" class="form-control" name="listing[image]" id="image"
-                                placeholder="Enter Image URL">
+                        <div class="row">
+                            <div class="col-md-12 mb-3">
+                                <label for="image" class="form-label">Image</label>
+                                <input type="text" class="form-control" name="listing[image]" id="image" placeholder="Enter Image URL">
+                            </div>
                         </div>
-                        <div class="mb-3">
-                            <label for="price" class="form-label">Price</label>
-                            <input type="text" class="form-control" name="listing[price]" id="price"
-                                placeholder="Enter Price">
+                        <div class="row">
+                            <div class="col-md-6 mb-3">
+                                <label for="price" class="form-label">Price</label>
+                                <input  class="form-control" name="listing[price]" id="price" placeholder="Enter Price" required>
+                                <div class="invalid-feedback">
+                                    Please provide a price.
+                                </div>
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <label for="country" class="form-label">Country</label>
+                                <input type="text" class="form-control" name="listing[country]" id="country" placeholder="Enter Country" required>
+                                <div class="invalid-feedback">
+                                    Please provide a country.
+                                </div>
+                            </div>
                         </div>
-                        <div class="mb-3">
-                            <label for="country" class="form-label">Country</label>
-                            <input type="text" class="form-control" name="listing[country]" id="country"
-                                placeholder="Enter Country">
+                        <div class="row">
+                            <div class="col-md-12 mb-3">
+                                <label for="location" class="form-label">Location</label>
+                                <input type="text" class="form-control" name="listing[location]" id="location" placeholder="Enter Location" required>
+                                <div class="invalid-feedback">
+                                    Please provide a location.
+                                </div>
+                            </div>
                         </div>
-                        <div class="mb-3">
-                            <label for="location" class="form-label">Location</label>
-                            <input type="text" class="form-control" name="listing[location]" id="location"
-                                placeholder="Enter Location">
-                        </div>
-
                         <button type="submit" class="btn btn-danger">ADD</button>
-
                     </form>
+                    
+                    
                 </div>
             </div>
         </div>
