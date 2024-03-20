@@ -6,6 +6,7 @@ const Listing = require("./models/listing.js")
 const path = require("path");
 const { connect } = require("http2")
 const methodOverride = require('method-override');
+const {listingSchema} = require("./schemas.js")
 
 const ejsMate = require("ejs-mate");
 const wrapAsync = require("./utilities/wrapAsync.js")
@@ -38,6 +39,15 @@ app.use(express.urlencoded({ extended: true })); // Allows us to access data fro
 app.engine("ejs", ejsMate);
 
 
+const validateListing = (req, res, next) => {
+    const { error } = listingSchema.validate(req.body);
+    if (error) {
+        const msg = error.details.map(el => el.message).join(",");
+        throw new ExpressError(400, msg);
+    } else {
+        next();
+    }
+}
 
 
 // INDEX
@@ -58,11 +68,8 @@ app.get("/listings/:id", wrapAsync(async (req, res) => {
 }))
 
 // CREATE
-app.post("/listings", wrapAsync(async (req, res) => {
-    if (! req.body.listing) {
-        throw new ExpressError(400, "Invalid Listing Data");
-    }
-    let newListing = new Listing(req.body.listing);
+app.post("/listings",validateListing, wrapAsync(async (req, res) => {
+    const newListing = new Listing(req.body.listing);
     await newListing.save();
     res.redirect("/listings");
 })
