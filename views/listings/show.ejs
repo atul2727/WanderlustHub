@@ -16,7 +16,7 @@
                         <li class="list-group-item"><%= listing.location %>, <%= listing.country %></li>
                     </ul>
                     <br>
-                    <a href="/listings/<%= listing._id %>/edit" class="btn btn-primary">EDIT LISTING</a>
+                    <a href="/listings/<%= listing._id %>/edit" class="btn btn-danger">EDIT LISTING</a>
                     <form method="POST" action="/listings/<%= listing._id %>?_method=DELETE" style="display: inline;">
                         <button type="submit" class="btn btn-danger">DELETE LISTING</button>
                     </form>
@@ -37,7 +37,7 @@
                     <textarea required name="review[comment]" placeholder="Leave a Review" class="form-control" rows="5"></textarea>
                     <div class="invalid-feedback">Please add some comment</div>
                 </div>
-                <button type="submit" class="btn btn-primary">Submit</button>
+                <button type="submit" class="btn btn-danger">Submit</button>
             </form>
     
             <hr>
@@ -51,6 +51,9 @@
                             <h5 class="card-title">Atul</h5>
                             <p class="card-text"><%= review.comment %></p>
                             <p class="card-text"><%= review.rating %> stars</p>
+                            <form method="POST" action="/listings/<%= listing._id %>/reviews/<%= review._id %>?_method=DELETE">
+                                <button class="btn btn-sm btn-dark">Delete Review</button>
+                            </form>
                         </div>
                     </div>
                 </div>
