@@ -27,7 +27,7 @@
             <hr>
     
             <p><b>Add a Review</b></p>
-            <form action="/listings/<%= listing.id %>/reviews" method="POST">
+            <form action="/listings/<%= listing.id %>/reviews" method="POST" novalidate class="needs-validation">
                 <div class="mb-3">
                     <label for="rating" class="form-label">Rating</label>
                     <input type="range" min="1" max="5" name="review[rating]" class="form-range">
@@ -35,6 +35,7 @@
                 <div class="mb-3">
                     <label for="comment" class="form-label">Comment</label>
                     <textarea required name="review[comment]" placeholder="Leave a Review" class="form-control" rows="5"></textarea>
+                    <div class="invalid-feedback">Please add some comment</div>
                 </div>
                 <button type="submit" class="btn btn-primary">Submit</button>
             </form>
