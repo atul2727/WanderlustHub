@@ -1,6 +1,7 @@
 const mongoose = require("mongoose")
 const Schema = mongoose.Schema;
 const reviewSchema = mongoose.Schema;
+const Review = require("./review")
 
 const defaultImage = "https://t3.ftcdn.net/jpg/03/45/05/92/240_F_345059232_CPieT8RIWOUk4JqBkkWkIETYAkmz2b75.jpg";
 
@@ -27,7 +28,7 @@ const listingSchema = new Schema({
 
 listingSchema.post("findOneAndDelete", async(listing) => {
     if (listing){
-        await review.deleteMany({ _id : {$in: listing.review} });
+        await Review.deleteMany({ _id : {$in: listing.review} });
     }
 })
 
