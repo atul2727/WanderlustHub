@@ -1,12 +1,16 @@
 <% layout("layouts/boilerplate") %>
 
-    <link rel="stylesheet" href="/css/error.css">
+<link rel="stylesheet" href="/css/error.css">
 
-    <body>
+<body>
 
-        <br>
-        <div class="alert alert-danger" role="alert">
-            <%=  err.message %>
-          </div>
+    <br>
+    <div class="alert alert-danger" role="alert">
+        <h4>Error <%=  err.statusCode %></h4>
+        <p><%=  err.message %></p>
+        <% if(err.stack){ %>
+            <pre><%=  err.stack %></pre>
+        <% } %>
+    </div>
 
-    </body>
+</body>
