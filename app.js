@@ -19,7 +19,7 @@ const ExpressError = require("./utilities/ExpressError.js")
 app.use(methodOverride('_method'));
 
 const listing = require("./routes/listing.js");
-// const review = require("./routes/review.js");
+const review = require("./routes/review.js");
 
 const mongo_url = "mongodb://127.0.0.1:27017/wanderlust"
 
@@ -63,41 +63,9 @@ app.use((req, res, next)=>{
     next()
 })
 
-
-const validateReview = (req, res, next) => {	
-    let { error } = reviewSchema.validate(req.body);	
-    if (error) {	
-        console.log("Listing validation error:", error.message);	
-        let msg = error.details.map((el) => el.message).join(",");	
-        throw new ExpressError(400, msg);	
-    } else {	
-        next();	
-    }	
-}	
-
+//  Routes
 app.use("/listings", listing);
-// app.use("/listings/:id/reviews", review);
-// Reviews	
-// POST	
-app.post("/listings/:id/reviews",validateReview, wrapAsync(async (req, res)=>{	
-    let listing = await Listing.findById(req.params.id)	
-    let newReview = new Review(req.body.review)	
-
-    listing.reviews.push(newReview)	
-    await newReview.save();	
-    await listing.save();	
-    req.flash("success", "New Review Created Successfully!")
-    res.redirect(`/listings/${listing._id}`);	
-}))	
-
-// DELETE	
-app.delete("/listings/:id/reviews/:reviewId", wrapAsync(async (req, res) => {	
-    let { id, reviewId } = req.params;	
-    await Listing.findByIdAndUpdate(id, { $pull: { reviews: reviewId } });	
-    await Review.findById(reviewId);	
-    req.flash("success", "Review Deleted Successfully!")
-    res.redirect(`/listings/${id}`);	
-}));	
+app.use("/listings/:id/reviews", review);
 
 
 
