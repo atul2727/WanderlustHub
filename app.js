@@ -6,6 +6,8 @@ const Listing = require("./models/listing.js")
 const Review = require("./models/review.js")
 const path = require("path");
 // const { connect } = require("http2")
+const session = require("express-session")
+const flash = require("connect-flash")
 const methodOverride = require('method-override');
 const {listingSchema, reviewSchema} = require("./schemas.js")
 
@@ -17,7 +19,7 @@ const ExpressError = require("./utilities/ExpressError.js")
 app.use(methodOverride('_method'));
 
 const listing = require("./routes/listing.js");
-// const review = require("./routes/listing.js");
+// const review = require("./routes/review.js");
 
 const mongo_url = "mongodb://127.0.0.1:27017/wanderlust"
 
@@ -41,6 +43,25 @@ app.use(express.urlencoded({ extended: true })); // Allows us to access data fro
 app.engine("ejs", ejsMate);
 
 
+const sessionOptions = {
+    secret: "secretcode",
+    resave: false,
+    saveUninitialized: true,
+    cookie: {
+        expires: Date.now() + 7*24*60*60*1000,
+        maxAge: 7*24*60*60*1000,
+        httpOnly: true                          // to prevent from cross scripting attacks
+    }
+}
+
+app.use(session(sessionOptions));
+app.use(flash());
+
+app.use((req, res, next)=>{
+    res.locals.success = req.flash("success");
+    console.log(res.locals.success);
+    next()
+})
 
 
 const validateReview = (req, res, next) => {	
@@ -55,6 +76,7 @@ const validateReview = (req, res, next) => {
 }	
 
 app.use("/listings", listing);
+// app.use("/listings/:id/reviews", review);
 // Reviews	
 // POST	
 app.post("/listings/:id/reviews",validateReview, wrapAsync(async (req, res)=>{	
@@ -64,7 +86,7 @@ app.post("/listings/:id/reviews",validateReview, wrapAsync(async (req, res)=>{
     listing.reviews.push(newReview)	
     await newReview.save();	
     await listing.save();	
-
+    req.flash("success", "New Review Created Successfully!")
     res.redirect(`/listings/${listing._id}`);	
 }))	
 
@@ -73,6 +95,7 @@ app.delete("/listings/:id/reviews/:reviewId", wrapAsync(async (req, res) => {
     let { id, reviewId } = req.params;	
     await Listing.findByIdAndUpdate(id, { $pull: { reviews: reviewId } });	
     await Review.findById(reviewId);	
+    req.flash("success", "Review Deleted Successfully!")
     res.redirect(`/listings/${id}`);	
 }));	
 
