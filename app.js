@@ -15,11 +15,16 @@ const ejsMate = require("ejs-mate");
 const wrapAsync = require("./utilities/wrapAsync.js")
 const ExpressError = require("./utilities/ExpressError.js")
 
+const passport = require("passport");
+const localStrategy = require("passport-local");
+const User = require("./models/user.js");
+
 // After app has been defined
 app.use(methodOverride('_method'));
 
-const listing = require("./routes/listing.js");
-const review = require("./routes/review.js");
+const listingRouter = require("./routes/listing.js");
+const reviewRouter = require("./routes/review.js");
+const userRouter = require("./routes/user.js");
 
 const mongo_url = "mongodb://127.0.0.1:27017/wanderlust"
 
@@ -57,6 +62,13 @@ const sessionOptions = {
 app.use(session(sessionOptions));
 app.use(flash());
 
+app.use(passport.initialize());
+app.use(passport.session());
+passport.use(new localStrategy(User.authenticate()));
+
+passport.serializeUser(User.serializeUser());
+passport.deserializeUser(User.deserializeUser());
+
 app.use((req, res, next)=>{
     res.locals.success = req.flash("success");
     res.locals.error = req.flash("error");
@@ -64,9 +76,19 @@ app.use((req, res, next)=>{
     next()
 })
 
+// app.get("/demouser", async (req, res)=>{
+//     let fakeuser = new User ({
+//         email: "akj@g.com",
+//         username: "akj",
+//     })
+//     let newUser = await User.register(fakeuser, "password");
+//     res.send(newUser);
+// })
+
 //  Routes
-app.use("/listings", listing);
-app.use("/listings/:id/reviews", review);
+app.use("/listings", listingRouter);
+app.use("/listings/:id/reviews", reviewRouter);
+app.use("/", userRouter);
 
 
 
