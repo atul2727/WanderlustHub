@@ -10,6 +10,7 @@
                 </div>
                 <div class="col-md-8">
                     <ul class="list-group">
+                        <i><li class="list-group-item"> Owned By: <%= listing.owner.username %> </li></i>
                         <li class="list-group-item"><%= listing.description %></li>
                         <li class="list-group-item">&#8377;<%= listing.price.toLocaleString("en-IN") %></li>
                         <li class="list-group-item"><%= listing.location %>, <%= listing.country %></li>
