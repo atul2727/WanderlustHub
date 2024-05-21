@@ -1,24 +1,14 @@
 const express = require("express");
 const router = express.Router();
 
-const wrapAsync = require("../utilities/wrapAsync.js")
-const ExpressError = require("../utilities/ExpressError.js")
+const wrapAsync = require("../utils/wrapAsync.js")
+const ExpressError = require("../utils/ExpressError.js")
 const {listingSchema, reviewSchema} = require("../schemas.js")
 const Listing = require("../models/listing.js")
-const {isLoggedIn} = require("../middleware.js")
+const {isLoggedIn, isOwner, validateListing} = require("../middleware.js")
 const session = require("express-session")
 const flash = require("connect-flash")
 
-const validateListing = (req, res, next) => {
-    let { error } = listingSchema.validate(req.body);
-    if (error) {
-        console.log("Listing validation error:", error.message);
-        let msg = error.details.map((el) => el.message).join(",");
-        throw new ExpressError(400, msg);
-    } else {
-        next();
-    }
-}
 
 // INDEX
 router.get("/", wrapAsync(async (req, res) => {
@@ -43,7 +33,7 @@ router.get("/:id", wrapAsync(async (req, res) => {
 }))
 
 // CREATE
-router.post("/",validateListing, isLoggedIn, wrapAsync(async (req, res) => {
+router.post("/",validateListing, isLoggedIn, isOwner, wrapAsync(async (req, res) => {
     const newListing = new Listing(req.body);
     newListing.owner = req.user._id;
     console.log(req.body)
@@ -54,7 +44,7 @@ router.post("/",validateListing, isLoggedIn, wrapAsync(async (req, res) => {
 );
 
 // EDIT
-router.get("/:id/edit", isLoggedIn, wrapAsync(async (req, res) => {
+router.get("/:id/edit", isLoggedIn, isOwner, wrapAsync(async (req, res) => {
     let { id } = req.params;
     let listing = await Listing.findById(id);
     if (!listing){
@@ -65,7 +55,7 @@ router.get("/:id/edit", isLoggedIn, wrapAsync(async (req, res) => {
 }))
 
 // UPDATE
-router.put("/:id", isLoggedIn, wrapAsync(async (req, res) => {
+router.put("/:id", isLoggedIn, isOwner, wrapAsync(async (req, res) => {
     let { id } = req.params;
     await Listing.findByIdAndUpdate(id, { ...req.body.listing })
     req.flash("success", "Listing Updated Successfully!")

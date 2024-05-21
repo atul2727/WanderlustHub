@@ -16,10 +16,12 @@
                         <li class="list-group-item"><%= listing.location %>, <%= listing.country %></li>
                     </ul>
                     <br>
+                    <% if(currentUser && currentUser._id.equals(listing.owner._id)) { %>
                     <a href="/listings/<%= listing._id %>/edit" class="btn btn-danger">EDIT LISTING</a>
                     <form method="POST" action="/listings/<%= listing._id %>?_method=DELETE" style="display: inline;">
                         <button type="submit" class="btn btn-danger">DELETE LISTING</button>
                     </form>
+                    <% } %>
                 </div>
             </div>
     

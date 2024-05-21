@@ -12,8 +12,8 @@ const methodOverride = require('method-override');
 const {listingSchema, reviewSchema} = require("./schemas.js")
 
 const ejsMate = require("ejs-mate");
-const wrapAsync = require("./utilities/wrapAsync.js")
-const ExpressError = require("./utilities/ExpressError.js")
+const wrapAsync = require("./utils/wrapAsync.js")
+const ExpressError = require("./utils/ExpressError.js")
 
 const passport = require("passport");
 const localStrategy = require("passport-local");
