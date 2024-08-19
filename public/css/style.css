@@ -26,4 +26,7 @@ body {
     /* Adjust as needed */
 }
 
+.danger-color {
+    background-color: #dc3545 !important; /* Bootstrap danger color */
+}
 

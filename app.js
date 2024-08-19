@@ -1,6 +1,6 @@
 const express = require("express")
 const app = express()
-const port = 2700
+const port = 3000
 const mongoose = require("mongoose")
 const Listing = require("./models/listing.js")
 const Review = require("./models/review.js")

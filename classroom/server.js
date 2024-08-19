@@ -54,6 +54,6 @@ app.get("/reqcount", (req, res) => {
     res.send(`You have visited this page ${req.session.count} times`)
 })
 
-app.listen(2700, (req, res) => {
-    console.log("Server is running on port 2700")
+app.listen(3000, (req, res) => {
+    console.log("Server is running on port 3000")
 })
