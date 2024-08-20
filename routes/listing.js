@@ -7,6 +7,10 @@ const { isLoggedIn, isOwner, validateListing } = require("../middleware.js")
 const session = require("express-session")
 const flash = require("connect-flash")
 
+const multer  = require('multer')
+const {storage} = require("../cloudConfig.js")
+const upload = multer({ storage })
+
 const listingController = require("../controllers/listings.js")
 
 // INDEX
@@ -32,9 +36,11 @@ router.get(
 router.post(
     "/",
     isLoggedIn,
+    upload.single('listing[image]'),
     validateListing,
     wrapAsync(listingController.create)
 );
+
 
 // EDIT
 router.get(
