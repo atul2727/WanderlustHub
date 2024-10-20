@@ -8,7 +8,7 @@
             <div class="col-md-8">
                 <!-- Edit Listing -->
                 <h2>Edit Listing</h2>
-                <form method="POST" action="/listings/<%= listing._id %>?_method=PUT" class="new-form">
+                <form method="POST" action="/listings/<%= listing._id %>?_method=PUT" class="new-form" enctype="multipart/form-data">
                     <div class="mb-3">
                         <label for="title" class="form-label">Title</label>
                         <input type="text" class="form-control" name="listing[title]" id="title"
@@ -20,9 +20,13 @@
                             placeholder="Enter Description"><%= listing.description %></textarea>
                     </div>
                     <div class="mb-3">
-                        <label for="image" class="form-label">Image</label>
-                        <input type="text" class="form-control" name="listing[image]" id="image"
-                            placeholder="Enter Image" value="<%= listing.image %>">
+                        <label for="image" class="form-label">Current Image</label>
+                        <img src="<%= originalImageUrl %>" alt="">
+                    </div>
+                    <div class="mb-3">
+                        <label for="image" class="form-label">New Image</label>
+                        <input type="file" class="form-control" name="listing[image]" id="image"
+                            placeholder="Enter Image">
                     </div>
                     <div class="mb-3">
                         <label for="price" class="form-label">Price</label>
