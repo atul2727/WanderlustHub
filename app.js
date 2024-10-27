@@ -13,6 +13,7 @@ const Review = require("./models/review.js")
 const path = require("path");
 // const { connect } = require("http2")
 const session = require("express-session")
+const MongoStore = require('connect-mongo');
 const flash = require("connect-flash")
 const methodOverride = require('method-override');
 const {listingSchema, reviewSchema} = require("./schemas.js")
@@ -32,7 +33,9 @@ const listingRouter = require("./routes/listing.js");
 const reviewRouter = require("./routes/review.js");
 const userRouter = require("./routes/user.js");
 
-const mongo_url = "mongodb://127.0.0.1:27017/wanderlust"
+// const mongo_url = "mongodb://127.0.0.1:27017/wanderlust"
+const mongo_url = process.env.ATLAS_URL
+// const mongo_url = "mongodb+srv://atul2727:<jaat2727>@cluster0.nmzd3.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0"
 
 
 main()
@@ -53,9 +56,17 @@ app.use(express.static(path.join(__dirname, "public")));
 app.use(express.urlencoded({ extended: true })); // Allows us to access data from forms in the request body
 app.engine("ejs", ejsMate);
 
+const store = MongoStore.create({
+    mongoUrl: mongo_url,
+    crypto: {
+        secret: process.env.SECRET,
+    },
+    touchAfter: 24 * 3600,
+})
 
 const sessionOptions = {
-    secret: "secretcode",
+    store,
+    secret: process.env.SECRET,
     resave: false,
     saveUninitialized: true,
     cookie: {
@@ -111,9 +122,9 @@ app.use((err, req, res, next) => {
     res.render("listings/error.ejs", { err });
 })
 
-app.get("/", (req, res) => {
-    res.send("Hello World")
-})
+// app.get("/", (req, res) => {
+//     res.send("Hello World")
+// })
 
 app.listen(port, () => {
     console.log(`Server is running on port ${port}`)
