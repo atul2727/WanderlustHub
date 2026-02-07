@@ -103,10 +103,6 @@ node init/index.js
 |---------|-------------|
 | `npm run dev` | Start dev server with nodemon |
 
-## License
-
-ISC
-
 ---
 
 *Built with ❤️ for travel enthusiasts*
